@@ -5,6 +5,8 @@ import org.dynamisecs.api.component.ComponentKey;
 import org.dynamisecs.api.query.Query;
 import org.dynamisecs.api.query.QuerySpec;
 import org.dynamisecs.api.world.World;
+import org.dynamisecs.api.world.WorldDelta;
+import org.dynamisecs.api.world.WorldTick;
 import org.dynamisecs.core.query.DefaultQuery;
 import org.dynamisecs.core.store.ComponentStore;
 import org.dynamisecs.core.store.SparseSetStore;
@@ -21,13 +23,48 @@ public final class DefaultWorld implements World {
 
     private final LinkedHashSet<EntityId> entities = new LinkedHashSet<>();
     private final Map<ComponentKey<?>, ComponentStore<?>> stores = new HashMap<>();
+
+    private DefaultWorldDelta currentDelta = DefaultWorldDelta.empty();
+    private DefaultWorldDelta lastDelta = DefaultWorldDelta.empty();
+    private boolean tickOpen;
     private long nextEntityId = 1L;
+
+    @Override
+    public WorldDelta beginTick(WorldTick tick) {
+        Objects.requireNonNull(tick, "tick");
+        if (tickOpen) {
+            throw new IllegalStateException("Tick already open");
+        }
+
+        tickOpen = true;
+        currentDelta = new DefaultWorldDelta(tick);
+        return currentDelta;
+    }
+
+    @Override
+    public WorldDelta endTick() {
+        if (!tickOpen) {
+            throw new IllegalStateException("No tick is currently open");
+        }
+
+        tickOpen = false;
+        lastDelta = currentDelta;
+        return lastDelta;
+    }
+
+    @Override
+    public WorldDelta delta() {
+        return tickOpen ? currentDelta : lastDelta;
+    }
 
     @Override
     public EntityId createEntity() {
         while (true) {
             EntityId candidate = EntityId.of(nextEntityId++);
             if (entities.add(candidate)) {
+                if (tickOpen) {
+                    currentDelta.recordCreated(candidate);
+                }
                 return candidate;
             }
         }
@@ -41,6 +78,9 @@ public final class DefaultWorld implements World {
         }
         for (ComponentStore<?> store : stores.values()) {
             store.remove(entityId);
+        }
+        if (tickOpen) {
+            currentDelta.recordDestroyed(entityId);
         }
         return true;
     }
@@ -65,6 +105,11 @@ public final class DefaultWorld implements World {
 
         ComponentStore<T> store = getOrCreateStore(key);
         store.put(entityId, component);
+
+        // Overwrites still count as an add event for this tick.
+        if (tickOpen) {
+            currentDelta.recordAdded(key, entityId);
+        }
     }
 
     @Override
@@ -88,7 +133,12 @@ public final class DefaultWorld implements World {
         if (store == null || !entities.contains(entityId)) {
             return false;
         }
-        return store.remove(entityId);
+
+        boolean removed = store.remove(entityId);
+        if (removed && tickOpen) {
+            currentDelta.recordRemoved(key, entityId);
+        }
+        return removed;
     }
 
     @Override

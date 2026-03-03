@@ -15,6 +15,22 @@ import java.util.Set;
  */
 public interface World {
 
+    // ── Ticks and deltas ────────────────────────────────────────────
+
+    WorldDelta beginTick(WorldTick tick);
+
+    /**
+     * Ends the current tick. After endTick(), the most recent delta is still available
+     * until the next beginTick().
+     */
+    WorldDelta endTick();
+
+    /**
+     * Returns the delta for the current tick if beginTick() has been called,
+     * otherwise returns the last completed tick delta (or an empty delta).
+     */
+    WorldDelta delta();
+
     // ── Entity lifecycle ─────────────────────────────────────────────
 
     EntityId createEntity();
