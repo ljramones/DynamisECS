@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.dynamisecs</groupId>
+    <artifactId>dynamisecs</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>ecs-runtime</artifactId>
+  <name>DynamisECS Runtime</name>
+  <description>Integration helpers, world tick orchestration, optional diagnostics.</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.dynamis</groupId>
+      <artifactId>dynamis-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dynamisecs</groupId>
+      <artifactId>ecs-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dynamisecs</groupId>
+      <artifactId>ecs-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+    </dependency>
+  </dependencies>
+</project>
