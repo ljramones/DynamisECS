@@ -20,11 +20,11 @@ Repository shape:
 
 Current implemented packages:
 
-- API (`org.dynamisecs.api.*`)
+- API (`org.dynamisengine.ecs.api.*`)
   - component key (`ComponentKey`)
   - world contracts (`World`, `WorldDelta`, `WorldTick`)
   - query contracts (`Query`, `QuerySpec`, `QueryBuilder`)
-- Core (`org.dynamisecs.core.*`)
+- Core (`org.dynamisengine.ecs.core.*`)
   - `DefaultWorld`
   - `DefaultWorldDelta`
   - `DefaultQuery`
@@ -99,9 +99,9 @@ Dependency direction intent:
 
 Current intended public contracts appear in `ecs-api`:
 
-- `org.dynamisecs.api.component.*`
-- `org.dynamisecs.api.world.*`
-- `org.dynamisecs.api.query.*`
+- `org.dynamisengine.ecs.api.component.*`
+- `org.dynamisengine.ecs.api.world.*`
+- `org.dynamisengine.ecs.api.query.*`
 
 These are appropriate as external-facing ECS contracts.
 

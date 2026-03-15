@@ -20,7 +20,7 @@ Use Java `25` (preview enabled), consistent with `.java-version` and Maven compi
 ## Coding Style & Naming Conventions
 - Indentation: 4 spaces
 - Encoding: UTF-8
-- Package names: lowercase (`org.dynamisecs.*`)
+- Package names: lowercase (`org.dynamisengine.ecs.*`)
 - Types: `PascalCase`, methods/fields: `camelCase`, constants: `UPPER_SNAKE_CASE`
 - Test classes: `<TypeName>Test`
 
@@ -32,7 +32,7 @@ Keep module boundaries strict: contracts in `ecs-api`, implementations in `ecs-c
 - Add tests for lifecycle, query semantics, and edge cases with each behavioral change
 
 ## Cross-Repo Ownership Policy
-- Entity IDs must use `org.dynamis.core.entity.EntityId`
+- Entity IDs must use `org.dynamisengine.core.entity.EntityId`
 - Do not create any ECS-local `EntityId` type
 - ECS defines no math types; Vectrix owns math. ECS may store Vectrix objects as component payloads only
 - ECS remains independent of SceneGraph/LightEngine/Physics/AI; cross-system bridges belong in external integration modules

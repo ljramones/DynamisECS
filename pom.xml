@@ -5,7 +5,7 @@
              http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.dynamisecs</groupId>
+  <groupId>org.dynamisengine.ecs</groupId>
   <artifactId>dynamisecs</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -35,19 +35,19 @@
     <dependencies>
       <!-- DynamisCore -->
       <dependency>
-        <groupId>org.dynamis</groupId>
+        <groupId>org.dynamisengine</groupId>
         <artifactId>dynamis-core</artifactId>
         <version>${dynamis.core.version}</version>
       </dependency>
 
       <!-- Internal modules -->
       <dependency>
-        <groupId>org.dynamisecs</groupId>
+        <groupId>org.dynamisengine.ecs</groupId>
         <artifactId>ecs-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.dynamisecs</groupId>
+        <groupId>org.dynamisengine.ecs</groupId>
         <artifactId>ecs-core</artifactId>
         <version>${project.version}</version>
       </dependency>
